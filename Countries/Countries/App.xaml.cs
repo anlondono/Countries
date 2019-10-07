@@ -4,6 +4,7 @@ using Countries.ViewModels;
 using Countries.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Countries.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Countries
@@ -28,6 +29,7 @@ namespace Countries
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IApiService, ApiService>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
         }

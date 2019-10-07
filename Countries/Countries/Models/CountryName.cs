@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Countries.Models
 {
-    class CountryName
+    public class CountryName
     {
         public string Id { get; set; }
 

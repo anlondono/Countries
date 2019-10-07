@@ -6,6 +6,6 @@
 	<Application.Resources>
 
 		<!-- Application resource dictionary -->
-
+        <x:String x:Key="UrlAPI">http://restcountries.eu</x:String>
 	</Application.Resources>
 </prism:PrismApplication>
