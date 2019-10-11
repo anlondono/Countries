@@ -1,323 +1,371 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Countries.Views.MainPage"
-             Title="{Binding Title}">
-    <StackLayout Padding="15">
-        <Label
-            FontSize="Large"
-            FontAttributes="Bold"
-            Text="Información del país"></Label>
-        <Label
-            Text="Lista de Paises">
-        </Label>
-        <Picker
-            ItemsSource="{Binding CountriesList}" 
-            SelectedItem="{Binding SelectedCountry}"
-            ItemDisplayBinding="{Binding Name}"
-            Title="Seleccioen un Pais">
-        </Picker>
-        <Button 
-            IsEnabled="{Binding IsEnabled}"
-            Command="{Binding InfoCommand}"
-            Text="Ver información del pais">
-        </Button>
+<ContentPage
+    x:Class="Countries.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    Title="{Binding Title}"
+    >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ffimageloadingsvg:SvgImageSourceConverter x:Key="SvgImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-        <ScrollView>
-            <StackLayout IsVisible="{Binding IsVisible}">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label>Order</Label>
+            <StackLayout Padding="20">
+
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Capital"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Capital}">
-                    </Label>
-
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Gentilicio"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Demonym}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="2"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Población"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Population, StringFormat='{0:N}'}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="3"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Área"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="3"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Area, StringFormat='{0:N}'}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="4"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Ubicación"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="4"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding LatLng, StringFormat='{0:N}'}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Monedas"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Currencies}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"                        
-                        Text="Idiomas"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Language}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Zona horaría"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding TimeZones}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Dominios"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding TopLevelDomain}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Códigos llamadas"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding CallingCodes}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="2"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Bloque regional"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding RegionalBlocs}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="3"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Región"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="3"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Region}">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="0"
-                        Grid.Row="4"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Sub región"
-                        HorizontalOptions="FillAndExpand">
-                    </Label>
-
-                    <Label 
-                        Grid.Column="1"
-                        Grid.Row="4"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding SubRegion}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1.5*" />
                     </Grid.ColumnDefinitions>
 
                     <Label
+                        Grid.Row="0"
                         Grid.Column="0"
-                        Grid.Row="0"
                         FontAttributes="Bold"
                         FontSize="Medium"
-                        Text="Otras traducciones">
-                    </Label>
-
-                    <Label
+                        HorizontalOptions="FillAndExpand"
+                        Text="Nombre"
+                        />
+                    <CheckBox
+                        Grid.Row="0"
                         Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding AltSpellings}">
-                    </Label>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="Fronteras">
-                    </Label>
-
-                    <Label
+                        IsChecked="{Binding ByName}"
+                        VerticalOptions="Center"
+                        />
+                    <Label Grid.Row="1" Grid.Column="0">Poblacion</Label>
+                    <CheckBox
+                        Grid.Row="1"
                         Grid.Column="1"
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Borders}">
-                    </Label>
+                        IsChecked="{Binding ByPopulation}"
+                        />
+                    <Label Grid.Row="2" Grid.Column="0">Tamaño</Label>
+                    <CheckBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        IsChecked="{Binding BySize}"
+                        />
                 </Grid>
             </StackLayout>
-        </ScrollView>
-    </StackLayout>
+
+            <Label Text="Lista de Paises" />
+            <Picker
+                Title="Selecciona un Pais"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding CountriesList}"
+                SelectedItem="{Binding SelectedCountry}"
+                />
+            <Button
+                Command="{Binding InfoCommand}"
+                IsEnabled="{Binding IsEnabled}"
+                Text="Ver información del pais"
+                />
+            <ffimageloading:CachedImage
+                HeightRequest="100"
+                Source="{Binding Flag, Converter={StaticResource SvgImageSourceConverter}}"
+                WidthRequest="100"
+                />
+            <ScrollView>
+                <StackLayout IsVisible="{Binding IsVisible}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Capital"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Capital}"
+                            />
+
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Gentilicio"
+                            />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Demonym}"
+                            />
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Población"
+                            />
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Population, StringFormat='{0:N}'}"
+                            />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Área"
+                            />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Area, StringFormat='{0:N}'}"
+                            />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Ubicación"
+                            />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding LatLng, StringFormat='{0:N}'}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Monedas"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Currencies}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Idiomas"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Language}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Zona horaría"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding TimeZones}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Dominios"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding TopLevelDomain}"
+                            />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Códigos llamadas"
+                            />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding CallingCodes}"
+                            />
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Bloque regional"
+                            />
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding RegionalBlocs}"
+                            />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Región"
+                            />
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Region}"
+                            />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Sub región"
+                            />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding SubRegion}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="Otras traducciones"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding AltSpellings}"
+                            />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="Fronteras"
+                            />
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Borders}"
+                            />
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

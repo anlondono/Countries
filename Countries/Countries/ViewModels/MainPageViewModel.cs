@@ -14,12 +14,16 @@ namespace Countries.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private ObservableCollection<CountryName> _countriesList;
+        private List<CountryName> _countryNames;
         private CountryName _selectedCountry;
         private bool _isEnabled;
         private bool _isVisible;
         private DelegateCommand _infoCommand;
         private IApiService _apiService;
         private List<Country> _countries { get; set; }
+        private bool _byName;
+        private bool _bySize;
+        private bool _byPopulation;
 
         private string _altSpellings;
         private double _area;
@@ -38,7 +42,6 @@ namespace Countries.ViewModels
         private string _timeZones;
         private string _topLevelDomain;
 
-
         public MainPageViewModel(INavigationService navigationService,
             IApiService apiService)
             : base(navigationService)
@@ -47,6 +50,26 @@ namespace Countries.ViewModels
             _apiService = apiService;
             LoadContries();
         }
+
+        public bool ByName
+        {
+            get => _byName;
+            set => SetProperty(ref _byName, value, OrderName);
+        }
+
+        public bool BySize
+        {
+            get => _bySize;
+            set => SetProperty(ref _bySize, value, OrderSize);
+        }
+
+        public bool ByPopulation
+        {
+            get => _byPopulation;
+            set => SetProperty(ref _byPopulation, value, OrderPopulation);
+        }
+
+
 
         public ObservableCollection<CountryName> CountriesList
         {
@@ -153,8 +176,6 @@ namespace Countries.ViewModels
         }
         public DelegateCommand InfoCommand => _infoCommand ?? (_infoCommand = new DelegateCommand(Info));
 
-        
-
         private async void Info()
         {
             IsVisible = false;
@@ -222,17 +243,19 @@ namespace Countries.ViewModels
                 altSpellings += string.Format("{0}, ", altSpelling);
             }
 
-
-            var latLon = string.Format("{0}, {1}", country.latlng[0], country.latlng[1]);
-
+            var latLon = "N/D";
+            if (country.latlng.Count >0)
+            {
+                 latLon = string.Format("{0}, {1}", country.latlng[0], country.latlng[1]);
+            }
             AltSpellings = altSpellings;
-            Area = country.area.Value;
+            Area = country.area ?? 0;
             Borders = borders;
             CallingCodes = callingCodes;
             Capital = country.capital;
             Currencies = currencies;
             Demonym = country.demonym;
-            Flag = country.flag.Replace("https", "http");
+            Flag = country.flag;
             Language = languages;
             LatLng = latLon;
             Population = country.population;
@@ -258,17 +281,51 @@ namespace Countries.ViewModels
                 return;
             }
             _countries = (List<Country>)response.Result;
-            var countryNames = new List<CountryName>();
+            _countryNames = new List<CountryName>();
             foreach (var country in _countries)
             {
-                countryNames.Add(new CountryName
+                _countryNames.Add(new CountryName
                 {
                     Id = country.alpha3Code,
-                    Name = country.translations.es ?? country.name
+                    Name = country.translations.es ?? country.name,
+                    Population = country.population,
+                    Area = country.area
                 });
             }
-            CountriesList = new ObservableCollection<CountryName>(countryNames.OrderBy(o => o.Name).ToList());
+            ByName = true;
             IsEnabled = true;
+        }
+
+        private void OrderSize()
+        {
+            if (BySize)
+            {
+                ByName = false;
+                ByPopulation = false;
+                CountriesList = new ObservableCollection<CountryName>(
+                    _countryNames.OrderBy(o => o.Area).ToList());
+            }
+        }
+        private void OrderName()
+        {
+            if (ByName)
+            {
+                BySize = false;
+                ByPopulation = false;
+
+                CountriesList = new ObservableCollection<CountryName>(
+                       _countryNames.OrderBy(o => o.Name).ToList());
+            }
+        }
+        private void OrderPopulation()
+        {
+            if (ByPopulation)
+            {
+                ByName = false;
+                BySize = false;
+                CountriesList = new ObservableCollection<CountryName>(
+                    _countryNames.OrderBy(o => o.Population).ToList());
+            }
         }
     }
 }
