@@ -1,5 +1,6 @@
 ﻿using Countries.Models;
 using Countries.Services;
+using Countries.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms.Maps;
 
 namespace Countries.ViewModels
 {
@@ -18,7 +20,7 @@ namespace Countries.ViewModels
         private CountryName _selectedCountry;
         private bool _isEnabled;
         private bool _isVisible;
-        private DelegateCommand _infoCommand;
+        private DelegateCommand<Map> _infoCommand;
         private IApiService _apiService;
         private List<Country> _countries { get; set; }
         private bool _byName;
@@ -41,7 +43,7 @@ namespace Countries.ViewModels
         private long _population;
         private string _timeZones;
         private string _topLevelDomain;
-
+        private ObservableCollection<Position> _positions;
         public MainPageViewModel(INavigationService navigationService,
             IApiService apiService)
             : base(navigationService)
@@ -76,6 +78,13 @@ namespace Countries.ViewModels
             get => _countriesList;
             set => SetProperty(ref _countriesList, value);
         }
+
+        public ObservableCollection<Position> Positions
+        {
+            get => _positions;
+            set => SetProperty(ref _positions, value);
+        }
+
         public string AltSpellings
         {
             get => _altSpellings;
@@ -174,9 +183,9 @@ namespace Countries.ViewModels
             get => _isVisible;
             set => SetProperty(ref _isVisible, value);
         }
-        public DelegateCommand InfoCommand => _infoCommand ?? (_infoCommand = new DelegateCommand(Info));
+        public DelegateCommand<Map> InfoCommand => _infoCommand ?? (_infoCommand = new DelegateCommand<Map>(Info));
 
-        private async void Info()
+        private async void Info(Map mapa)
         {
             IsVisible = false;
             if (SelectedCountry == null)
@@ -244,10 +253,25 @@ namespace Countries.ViewModels
             }
 
             var latLon = "N/D";
-            if (country.latlng.Count >0)
+            if (country.latlng.Count > 0)
             {
-                 latLon = string.Format("{0}, {1}", country.latlng[0], country.latlng[1]);
+                //tomado de:
+                //https://stackoverflow.com/a/45244481/8538799
+                latLon = string.Format("{0}, {1}", country.latlng[0], country.latlng[1]);
+                var position = new Position(country.latlng[0], country.latlng[1]);
+                mapa.MoveToRegion(
+                    MapSpan.FromCenterAndRadius(
+                    position,
+                    Distance.FromKilometers(700)));
+                mapa.Pins.Clear();
+                mapa.Pins.Add(new Pin
+                {
+                    Label = SelectedCountry.Name,
+                    Position = position,
+                    Type = PinType.Place
+                });
             }
+
             AltSpellings = altSpellings;
             Area = country.area ?? 0;
             Borders = borders;
